@@ -8,6 +8,7 @@ rescue
   require 'glimmer-dsl-swt'
   # add more gems if needed
 end
+require 'thegist/lib/gisty'
 require 'thegist/view/app_view'
 
 class Thegist

@@ -31,6 +31,7 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
+    gist (6.0.0)
     git (1.9.1)
       rchardet (~> 1.8)
     github_api (0.19.0)
@@ -157,6 +158,7 @@ PLATFORMS
   universal-java-1.8
 
 DEPENDENCIES
+  gist (~> 6.0)
   glimmer-dsl-swt (~> 4.20.13.15)
   juwelier (= 2.4.9)
   rspec (~> 3.5.0)

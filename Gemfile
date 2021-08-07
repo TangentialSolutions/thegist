@@ -12,3 +12,5 @@ group :development do
   gem 'warbler', '2.0.5'
   gem 'simplecov', '>= 0'
 end
+
+gem "gist", "~> 6.0"

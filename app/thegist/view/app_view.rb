@@ -1,6 +1,21 @@
 class Thegist
   module View
     class AppView
+      class GistFetch
+        include Gist
+        include Gisty
+        attr_accessor :gists, :gists_options
+
+        def initialize
+          self.gists_options = list_all_gists :tangentus
+          reset_gists!
+        end
+
+        def reset_gists!
+          self.gists = ['Quebec', 'Manitoba', 'Alberta']
+        end
+      end
+
       include Glimmer::UI::CustomShell
     
       ## Add options like the following to configure CustomShell by outside consumers
@@ -24,50 +39,70 @@ class Thegist
             display_preferences_dialog
           }
         }
+
+        @gist_fetch = GistFetch.new
       end
-  
+
+      body {
+        shell {
+          grid_layout
+
+          text 'Hello, List Multi Selection!'
+
+          list(:multi) {
+            # selection <=> [@person, :provinces] # also binds to provinces_options by convention
+            selection <=> [@gist_fetch, :gists] # also binds to provinces_options by convention
+          }
+
+          button {
+            text 'Reset Selections To Default Values'
+
+            on_widget_selected { @gister.reset_gists! }
+          }
+        }
+      }
+
       ## Use after_body block to setup observers for widgets in body
       #
       # after_body do
       #
       # end
-  
       ## Add widget content inside custom shell body
       ## Top-most widget must be a shell or another custom shell
       #
-      body {
-        shell {
-          # Replace example content below with custom shell content
-          minimum_size 420, 240
-          image File.join(APP_ROOT, 'package', 'windows', "Thegist.ico") if OS.windows?
-          text "Thegist - App View"
-        
-          grid_layout
-          label(:center) {
-            text <= [self, :greeting]
-            font height: 40
-            layout_data :fill, :center, true, true
-          }
-          
-          menu_bar {
-            menu {
-              text '&File'
-              menu_item {
-                text '&About...'
-                on_widget_selected {
-                  display_about_dialog
-                }
-              }
-              menu_item {
-                text '&Preferences...'
-                on_widget_selected {
-                  display_preferences_dialog
-                }
-              }
-            }
-          }
-        }
-      }
+      # body {
+      #   shell {
+      #     # Replace example content below with custom shell content
+      #     minimum_size 420, 240
+      #     image File.join(APP_ROOT, 'package', 'windows', "Thegist.ico") if OS.windows?
+      #     text "Thegist - App View"
+      #
+      #     grid_layout
+      #     label(:center) {
+      #       text <= [self, :greeting]
+      #       font height: 40
+      #       layout_data :fill, :center, true, true
+      #     }
+      #
+      #     menu_bar {
+      #       menu {
+      #         text '&File'
+      #         menu_item {
+      #           text '&About...'
+      #           on_widget_selected {
+      #             display_about_dialog
+      #           }
+      #         }
+      #         menu_item {
+      #           text '&Preferences...'
+      #           on_widget_selected {
+      #             display_preferences_dialog
+      #           }
+      #         }
+      #       }
+      #     }
+      #   }
+      # }
   
       def display_about_dialog
         message_box(body_root) {
